@@ -14,8 +14,8 @@
 
 body {
   color:#232F3F;
-  margin-bottom: 0;
-  margin-bottom:100px;
+  min-height: 100vh;
+  position: relative;
 
 }
 
@@ -48,15 +48,27 @@ body {
   margin-top: 50px;
 }
 
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -142px;
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.footer, .page-wrap:after {
+  /* .push must be the same height as footer */
+  height: 142px;
+}
 .footer {
-  height: 100px;
-  background-color: #232F3F;
-  position: fixed;
-  width: 100%;
-  margin-bottom:0px;
+  background: #232F3F;
   color: white;
-     bottom:0px;
-    left:0px;
-    right:0px;
 }
 

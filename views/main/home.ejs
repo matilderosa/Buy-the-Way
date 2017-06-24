@@ -1,18 +1,19 @@
 <% include ../partials/header %>
 <% include ../partials/navbar %>
-
+<div class="page-wrap">
 <div class="jumbotron">
 <div class="jumbo-container">
   <h1 class = "text-center">Buy the Way</h1>
   <p class = "text-center">Find you favourite product</p>
-       <form class = "form-inline" action="/search" method = "post">
+       <form class = "form-inline my-form" action="/search" method = "post">
        <div class="teste">
          <div class="dropdown">
            <button class="btn my-btn dropdown-toggle" type="button" data-toggle="dropdown">All
             <span class="caret"></span></button>
             <ul class="dropdown-menu">
+            <li><a href="#" id = "all" data-value = "all">All</a></li
               <% for (var i = 0; i < categories.length; i++) { %>
-              <li><a href="#"><%= categories[i].name %></a></li>
+              <li><a href="#" id = "<%= categories[i]._id %>" data-value = "<%= categories[i].name %>" ><%= categories[i].name %></a></li>
 
               <% } %>
 
@@ -242,7 +243,7 @@
 
 
 </div>
-
+</div>
 
 
 
