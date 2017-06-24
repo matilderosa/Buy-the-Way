@@ -1,0 +1,61 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+
+<div class = "container">
+<div class = "row">
+  <div class = "col-sm-6 col-md-4">
+  <h1>Profile page</h1>
+
+<p>Hello <%= user.profile.name %></p>
+
+
+
+    <img class = "img-circle img-responsive img-center" src="<%= user.profile.picture %>">
+
+    <br />
+    <p>Name: <%= user.profile.name %></p>
+    <p>Email: <%= user.email %></p>
+
+    <% if (user.address === "" || typeof user.address === "undefined") { %>
+    <p>Address: <span>You have no address</span></p>
+
+    <% } else {%>
+    <p>Address: <%= user.address %></p>
+
+    <% } %>
+
+    <a href="/profile/edit" class = "btn btn-default">Edit Profile</a>
+  </div>
+  <div class = "col-md-6">
+    <h2 class = "text-center">History</h2>
+    <table class = "table table-striped sticky-header">
+      <thead>
+      <tr>
+        <th>Item's Name</th>
+        <th>Paid:</th>
+        </tr>
+        <tbody>
+          <% for (var i = 0; i < user.history.length; i++){ %>
+          <tr>
+          <td> <%= user.history[i].item.name %> </td>
+          <td> <%= user.history[i].paid %> </td>
+          </tr>
+
+         <% } %>
+
+        </tbody>
+      </thead>
+    </table>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<% include ../partials/footer %>

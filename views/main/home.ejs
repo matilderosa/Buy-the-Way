@@ -1,0 +1,252 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+
+<div class="jumbotron">
+<div class="jumbo-container">
+  <h1 class = "text-center">Buy the Way</h1>
+  <p class = "text-center">Find you favourite product</p>
+       <form class = "form-inline" action="/search" method = "post">
+       <div class="teste">
+         <div class="dropdown">
+           <button class="btn my-btn dropdown-toggle" type="button" data-toggle="dropdown">All
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <% for (var i = 0; i < categories.length; i++) { %>
+              <li><a href="#"><%= categories[i].name %></a></li>
+
+              <% } %>
+
+            </ul>
+          </div>
+          <input type="text" name = "q" class = "form-control" placeholder="Search...">
+          <button type = "submit" class = "btn">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  <% var nameProducts = []; %>
+  <% var imageProducts = []; %>
+  <% var priceProducts = []; %>
+  <% var idProducts = []; %>
+  <% var i = 0; %>
+  <% while (nameProducts.length < 10) { %>
+  <% if (products[i].category.name === "books") { %>
+  <%  nameProducts.push(products[i].name) %>
+  <%  imageProducts.push(products[i].image) %>
+  <%  priceProducts.push(products[i].price) %>
+  <%  idProducts.push(products[i]._id) %>
+    <% } %>
+   <%  i++; %>
+    <% } %>
+
+
+ <div class="container">
+
+    <h1 class = "text-center">New on Books!</h1>
+
+
+
+<!--  <a href="https://github.com/rtpHarry/Bootstrap3-ShowManySlideOneCarousel">this code sample</a>   -->
+<div class="row">
+   <div class="col-md-12">
+      <div class="carousel carousel-showmanymoveone slide" id="carousel-tilenav" data-interval="false">
+         <div class="carousel-inner">
+            <div class="item active">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[0]%>"><img src="<%= imageProducts[0]%>">
+                  <h4><%=nameProducts[0]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+                <div class="thumbnail">
+                  <a href="/product/<%= idProducts[1]%>">
+                  <img src="<%= imageProducts[1]%>" class="img-responsive">
+                  <h4><%=nameProducts[1]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[2]%>">
+                  <img src="<%= imageProducts[2]%>" class="img-responsive">
+                  <h4><%=nameProducts[2]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[3]%>">
+                  <img src="<%= imageProducts[3]%>" class="img-responsive">
+                  <h4><%=nameProducts[3]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[4]%>">
+                  <img src="<%= imageProducts[4]%>" class="img-responsive">
+                  <h4><%=nameProducts[4]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[5]%>">
+                  <img src="<%= imageProducts[5]%>" class="img-responsive">
+                  <h4><%=nameProducts[5]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[6]%>">
+                  <img src="<%= imageProducts[6]%>" class="img-responsive">
+                  <h4><%=nameProducts[6]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[7]%>">
+                  <img src="<%= imageProducts[7]%>" class="img-responsive">
+                  <h4><%=nameProducts[7]%></h4>
+                  </a></div>
+               </div>
+            </div>
+         </div>
+         <a class="left carousel-control" href="#carousel-tilenav" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+         <a class="right carousel-control" href="#carousel-tilenav" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+      </div>
+   </div>
+</div>
+
+
+</div>
+
+  <% var nameProducts = []; %>
+  <% var imageProducts = []; %>
+  <% var priceProducts = []; %>
+  <% var idProducts = []; %>
+  <% var i = 0; %>
+  <% while (nameProducts.length < 10) { %>
+  <% if (products[i].category.name === "movies") { %>
+  <%  nameProducts.push(products[i].name) %>
+  <%  imageProducts.push(products[i].image) %>
+  <%  priceProducts.push(products[i].price) %>
+  <%  idProducts.push(products[i]._id) %>
+    <% } %>
+   <%  i++; %>
+    <% } %>
+
+
+ <div class="container">
+
+    <h1 class = "text-center">New on Movies!</h1>
+
+
+
+<!--  <a href="https://github.com/rtpHarry/Bootstrap3-ShowManySlideOneCarousel">this code sample</a>   -->
+<div class="row">
+   <div class="col-md-12">
+      <div class="carousel carousel-showmanymoveone2 slide" id="carousel-tilenav2" data-interval="false">
+         <div class="carousel-inner">
+            <div class="item active">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[0]%>"><img src="<%= imageProducts[0]%>">
+                  <h4><%=nameProducts[0]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+                <div class="thumbnail">
+                  <a href="/product/<%= idProducts[1]%>">
+                  <img src="<%= imageProducts[1]%>" class="img-responsive">
+                  <h4><%=nameProducts[1]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[2]%>">
+                  <img src="<%= imageProducts[2]%>" class="img-responsive">
+                  <h4><%=nameProducts[2]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[3]%>">
+                  <img src="<%= imageProducts[3]%>" class="img-responsive">
+                  <h4><%=nameProducts[3]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[4]%>">
+                  <img src="<%= imageProducts[4]%>" class="img-responsive">
+                  <h4><%=nameProducts[4]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[5]%>">
+                  <img src="<%= imageProducts[5]%>" class="img-responsive">
+                  <h4><%=nameProducts[5]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[6]%>">
+                  <img src="<%= imageProducts[6]%>" class="img-responsive">
+                  <h4><%=nameProducts[6]%></h4>
+                  </a></div>
+               </div>
+            </div>
+            <div class="item">
+               <div class="col-xs-12 col-sm-6 col-md-2">
+               <div class="thumbnail">
+                  <a href="/product/<%= idProducts[7]%>">
+                  <img src="<%= imageProducts[7]%>" class="img-responsive">
+                  <h4><%=nameProducts[7]%></h4>
+                  </a></div>
+               </div>
+            </div>
+         </div>
+         <a class="left carousel-control" href="#carousel-tilenav2" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+         <a class="right carousel-control" href="#carousel-tilenav2" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+      </div>
+   </div>
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<% include ../partials/footer %>

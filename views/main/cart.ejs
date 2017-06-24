@@ -1,0 +1,109 @@
+<% include ../partials/header %>
+
+<div class = "container">
+  <div class = "row">
+    <div class = "col-lg-6">
+
+      <% if (message.length > 0) { %>
+      <div class = "alert alert-success alert-dismissible">
+        <button type = "button" class = "close" data-dismiss = "alert" aria-label = "close">
+          <span aria-hidden = "true">&times;</span>
+        </button>
+        <%= message %>
+      </div>
+      <% } %>
+
+      <% foundCart.items.forEach(function(item){ %>
+
+      <div class = "list-group">
+        <span class = "list-group-item">
+          <div class = "row">
+            <div class = "col-md-3">
+              <span>
+                <img class = "product-image" src="<%= item.item.image %>">
+              </span>
+            </div>
+            <div class = "col-md-6">
+              <p class = "list-group-item-heading">
+                <%= item.item.name %>
+              </p>
+            </div>
+            <div class = "col-md-3">
+              <p> <%= item.quantity %> </p>
+              <p> <%= item.price %> </p>
+
+              <form action="/remove" method = "post">
+                <input type="hidden" name = "item" value = "<%= item._id %>">
+                <input type="hidden" name = "price" value = "<%= item.price %>">
+                <button type="submit" type = "button">Remove</button>
+
+              </form>
+            </div>
+
+          </div>
+        </span>
+      </div>
+
+      <% }) %>
+
+    </div>
+    <div class = "col-md-3"></div>
+    <div class = "col-md-3">
+      <div class = "list-group">
+        <span class = "list-group-item">
+          <h4>Total:
+            <span class = "totalPrice">
+              <%= foundCart.total %>
+            </span>
+          </h4>
+          <div class = "form-group">
+            <input type="hidden" value = "<%= foundCart.total %>">
+            <button type = "submit" class = "btn btn-default btn-lg" data-toggle = "modal" data-target = "#myModal">Pay with stripe</button>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Pay with stripe</h4>
+          </div>
+          <div class="modal-body">
+
+<form action="/payment" method="post" id="payment-form">
+<input type="hidden" name = "stripeMoney" value = "<%= foundCart.total %>">
+  <div class="form-row">
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
+      <!-- a Stripe Element will be inserted here. -->
+    </div>
+
+    <!-- Used to display form errors -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+
+  <button>Submit Payment</button>
+</form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class = "row">
+  <div class = "colg-lg-12 col-md-offset-6">
+    <div class = "text-center" id = "loading"></div>
+  </div>
+</div>
+</div>
+
+
+
+<% include ../partials/footer %>

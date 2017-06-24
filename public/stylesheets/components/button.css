@@ -1,0 +1,10 @@
+.my-btn {
+  background-color: #232F3F;
+  color: white;
+  flex: 0 0 5%;
+}
+
+.btn-yellow {
+  background-color: #F3A847;
+  color: white;
+}
