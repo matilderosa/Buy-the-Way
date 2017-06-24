@@ -10,6 +10,15 @@
           <img src="<%= product.image %>" alt="">
         </div>
         <div class = "well">
+
+          <% for (var i = 0; i < avg ; i++) { %>
+          <i class="fa fa-star" style="color: #ffb400"></i>
+          <% } %>
+          <% for (var i = 0; i < (5 - avg) ; i++) { %>
+
+          <i class="fa fa-star"></i>
+          <% } %>
+
           <div class = "reviews">
             <input type="hidden" name = "product-id" value = "<%= product._id %>" id = "product-id">
 

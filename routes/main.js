@@ -7,6 +7,9 @@ var express    = require("express"),
     async      = require("async");
 
 
+
+
+
 function paginate(req, res, next) {
    var perPage = 9;
     var page = req.params.page;
@@ -108,8 +111,7 @@ router.post("/remove", function(req, res, next){
 
 //Redirect the user to the search ALL
 router.post("/search", function(req, res, next){
-  res.redirect("/search?q=" + req.body.q);
-
+  res.redirect("/search/?q=" + req.body.q);
 });
 
 
@@ -122,9 +124,38 @@ router.get("/search", function(req, res, next){
       var data = results.hits.hits.map(function(hit){
         return hit;
       });
+console.log(data);
+        res.render("main/search-result", {
+        query: req.query.q,
+        data: data,
+        category: "all"
+      });
+    });
+  }
+});
+
+
+
+
+router.post("/search/:value/:id", function(req, res, next){
+  res.redirect("/search/" + req.params.value + "/" + req.params.id + "?q=" + req.body.q);
+
+});
+
+
+router.get("/search/:value/:id", function(req, res, next){
+  if (req.query.q){
+    Product.search({
+      query_string: {query: req.query.q}
+    }, function(err, results){
+      if (err) return next(err);
+      var data = results.hits.hits.filter(function(hit){
+        return hit._source.category == req.params.id
+      });
       res.render("main/search-result", {
         query: req.query.q,
-        data: data
+        data: data,
+        category: req.params.value
       });
     });
   }
@@ -176,7 +207,16 @@ router.get("/products/:id", function(req, res, next){
 router.get("/product/:id", function(req, res, next){
   Product.findById({_id: req.params.id}, function(err, product){
     if (err) return next(err);
-    res.render("main/product", {product: product});
+    if (product.reviews.length === 0) {
+      var avg = 0;
+    } else {
+    var sum = 0;
+    product.reviews.forEach(function(review){
+      sum += review.rating;
+    });
+    var avg = sum / product.reviews.length;
+  }
+    res.render("main/product", {product: product, avg: avg});
   });
 });
 
