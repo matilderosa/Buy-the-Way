@@ -10,7 +10,9 @@ var express       = require("express"),
     flash         = require("express-flash"),
     MongoStore    = require("connect-mongo/es5")(session), //stores sessions on the server side
     passport      = require("passport"),
+    cloudinary    = require("cloudinary"),
     secret        = require("./config/secret");
+
 
 // Require Schemas
 var User          = require("./models/user"),
@@ -31,7 +33,11 @@ mongoose.connect(secret.database, function(err){
   }
 });
 
-
+cloudinary.config({
+  cloud_name: secret.cloudinaryName,
+  api_key: '468163595992795',
+  api_secret: secret.cloudinarySecreyApi
+});
 
 //middleware
 app.use(morgan("dev"));
@@ -83,14 +89,13 @@ app.use(mainRoutes);
 app.use(userRoutes);
 app.use(adminRoutes);
 app.use("/api", apiRoutes),
-app.use("/product/:id/reviews", reviewRoutes);
+app.use("/products/:id/reviews", reviewRoutes);
 
 app.use(function(req, res, next){
    res.locals.errors = req.flash("errors");
    res.locals.success = req.flash("success");
    next();
 });
-
 
 
 

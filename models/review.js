@@ -11,9 +11,9 @@ var reviewSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
-    username: String,
-    rating: Number
-  }
+    username: String
+  },
+  rating: Number
 });
 
 //Creates the model

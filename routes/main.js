@@ -198,14 +198,13 @@ router.get("/products/:id", function(req, res, next){
   .populate("category") // can only use populate if the data type is an object id
   .exec(function(err, products){
     if (err) return next(err);
-    console.log(products);
     res.render("main/category", {products: products});
   });
 });
 
 // Product
 router.get("/product/:id", function(req, res, next){
-  Product.findById({_id: req.params.id}, function(err, product){
+  Product.findById(req.params.id).populate("reviews").exec(function(err, product){
     if (err) return next(err);
     if (product.reviews.length === 0) {
       var avg = 0;
@@ -214,7 +213,7 @@ router.get("/product/:id", function(req, res, next){
     product.reviews.forEach(function(review){
       sum += review.rating;
     });
-    var avg = sum / product.reviews.length;
+    var avg = Math.round(sum / product.reviews.length);
   }
     res.render("main/product", {product: product, avg: avg});
   });
@@ -223,7 +222,6 @@ router.get("/product/:id", function(req, res, next){
 //Payment route
 
 router.post("/payment", function(req, res, next){
-console.log(req.body);
   var stripeToken = req.body.stripeToken; //get the token from the client side
   var currentCharges = Math.round(req.body.stripeMoney * 100); // *100 stripe is in cents
   // method for the admin to see who bought the items

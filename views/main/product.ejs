@@ -9,15 +9,9 @@
         <div class="thumbnail">
           <img src="<%= product.image %>" alt="">
         </div>
-        <div class = "well">
-
-          <% for (var i = 0; i < avg ; i++) { %>
-          <i class="fa fa-star" style="color: #ffb400"></i>
-          <% } %>
-          <% for (var i = 0; i < (5 - avg) ; i++) { %>
-
-          <i class="fa fa-star"></i>
-          <% } %>
+        <div class = "my-well">
+        <h4>Customer Reviews</h4>
+        <hr>
 
           <div class = "reviews">
             <input type="hidden" name = "product-id" value = "<%= product._id %>" id = "product-id">
@@ -26,12 +20,20 @@
 
             <div class = "row" id = "row<%= review._id %>">
               <div class = "col-md-12">
+              <div id = "user-rating<%= review._id %>">
+              <% for (var i = 0; i < review.rating ; i++) { %>
+               <span class = "starsColored"><i class="fa fa-star" style="color: #ffb400"></i></span>
+               <% } %>
+               <% for (var i = 0; i <  (5- review.rating) ; i++) { %>
+               <span class = "starsBleak"><i class="fa fa-star"></i></span>
+               <% } %>
+               </div>
                <strong><%= review.author.username %></strong>
                <span class = "pull-right"> <%= review.createdAt.toDateString() %></span>
                <p id = "pbody<%= review._id %>">
                 <%= review.text %>
               </p>
-              <% if (currentUser && review.author.id.equals(currentUser._id)) { %>
+              <% if (user && review.author.id.equals(user._id)) { %>
               <button class = "btn btn-xs btn-warning edit-button" id = "edit<%= review._id %>">Edit</button>
               <button class = "btn btn-xs btn-danger delete-button" id = "delete<%= review._id %>">Delete</button>
               <% } %>
@@ -42,14 +44,27 @@
         </div>
         <hr>
         <form id = "create-form" action="" class = "form-inline">
-            <input class = "form-control" id = "create-input" type = "text" name = "review[text]" placeholder = "text">
-          <button class = "btn btn-sm btn-warning">Submit</button>
+            <input class = "form-control" id = "create-input" type = "text" name = "review[text]" placeholder = "text" required="">
+            <label for="create-rating">Rate from 1 to 5</label>
+            <input class = "form-control" type="number" min="1" max="5" id = "create-rating" name = "review[rating]" required>
+            <button class = "btn btn-sm btn-warning">Submit</button>
+
         </form>
       </div>
     </div>
 
     <div class = "col-md-4 col-md-offset-2">
       <h3><%= product.name %></h3>
+      <div class = "rating">
+                        <% for (var i = 0; i < avg ; i++) { %>
+          <span class = "colorStar"><i class="fa fa-star" style="color: #ffb400"></i></span>
+          <% } %>
+          <% for (var i = 0; i < (5 - avg) ; i++) { %>
+
+          <span class = "emptyStar"><i class="fa fa-star"></i></span>
+          <% } %>
+      </div>
+
       <h1><%= product.price %>€</h1>
 
       <form action="" method = "post">
@@ -70,7 +85,7 @@
         </div>
 
         <% if (user) { %>
-        <button type = "submit" class = "btn btn-default btn-lg">Add to Cart</button>
+        <button type = "submit" class = "btn btn-warning btn-lg">Add to Cart</button>
         <% } else { %>
         <a href="/signup" class = "btn btn-warning btn-lg">Signup to start buying</a>
 

@@ -10,6 +10,7 @@
 @import url("components/carousel.css");
 @import url("components/carousel2.css");
 
+
 /* General style rules for fonts and colors */
 
 body {
@@ -72,3 +73,6 @@ html, body {
   color: white;
 }
 
+.my-well {
+  margin-bottom: 50px;
+}

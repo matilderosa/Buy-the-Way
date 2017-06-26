@@ -1,10 +1,18 @@
-var express       = require("express"),
+var express   = require("express"),
 router        = express.Router(),
 User          = require("../models/user"),
 Cart          = require("../models/cart"),
 async         = require("async"),
 passport      = require("passport"),
-passportConf  = require("../config/passport");
+passportConf  = require("../config/passport"),
+cloudinary    = require("cloudinary"),
+multer        = require("multer"),
+upload        = multer ({dest: "../public/uploads/"});
+
+// It will upload a file which is received in form-data from the client. Key for the file is 'photo1'.
+//router.put('/me', cloudinaryUpload.fields([{name: 'cover', maxCount:1}]));
+
+var bodyParser    = require("body-parser");
 
 
 router.get("/signup", function(req, res){
@@ -13,7 +21,7 @@ router.get("/signup", function(req, res){
 
 
 //CREATE ROUTE (creates new user)
-router.post("/signup", function(req, res, next){
+router.post("/signup", upload.single('image'), function(req, res, next){
 
   async.waterfall([
     function(callback){
@@ -22,7 +30,9 @@ router.post("/signup", function(req, res, next){
       user.profile.name = req.body.name;
       user.password = req.body.password;
       user.email = req.body.email;
-      user.profile.picture = user.gravatar();
+      // user.profile.picture = user.gravatar();
+
+
 
       User.findOne({email: req.body.email}, function(err, existingUser){
 
@@ -67,7 +77,7 @@ router.post("/login", passport.authenticate("local-login", {
 router.get("/profile", passportConf.isAuthenticated, function(req, res, next){
   User
   .findOne({_id: req.user._id})
-  .populate("history.item")
+  .populate()
   .exec(function(err, foundUser){
     if (err) next(err);
     res.render("accounts/profile", {user: foundUser})
@@ -100,6 +110,23 @@ router.post("/profile/edit", function(req, res, next){
   });
 });
 
+router.post("/upload", upload.any(), function(req, res, next){
+  User.findOne({_id: req.user._id}, function(err, user){
+    if (err) return next(err);
+  console.log(req.files[0].path);
+  cloudinary.uploader.upload(req.files[0].path,
+   function(result) {
+    user.profile.picture = result.url;
+    user.save(function(err){
+      if (err) return next(err);
+      req.flash("success", "Successfully edited your profile");
+      return res.redirect("/profile");
+    });
+  });
+
+});
+  });
+
 //FACEBOOK
 //send the user to facebook to get info
 router.get("/auth/facebook", passport.authenticate("facebook", {scope: "email"}));
@@ -109,6 +136,7 @@ router.get("/auth/facebook/callback", passport.authenticate("facebook", {
   successRedirect: "/profile",
   failureRedirect: "/login"
 }));
+
 
 
 module.exports = router;
